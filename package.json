@@ -1,0 +1,14 @@
+{
+  "name": "nexora-sdk",
+  "version": "1.0.0",
+  "description": "Web SDK for tracking user actions",
+  "main": "index.js",
+  "scripts": {
+    "build": "node build.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "esbuild": "^0.25.4"
+  }
+}
