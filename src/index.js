@@ -8,12 +8,9 @@ const nexora_sdk = {
   init: (options) => {
     window.__NEXORA_SECRET_KEY = options.secretKey;
     window.__NEXORA_OFFLINE_MODE = false;
-
-    const INACTIVITY_TIMEOUT = 60000;
-    let inactivityTimer;
-
+    // set log level
     setLogLevel(options.logLevel || "warn");
-   
+    // initiate user
     const { user, isNew } = UserService.initUser();
     logger.log("Nexora SDK initialized", { user });
     
