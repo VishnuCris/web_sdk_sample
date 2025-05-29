@@ -2,6 +2,8 @@ import { ApiService } from "./apiService.js";
 import { logger } from "../core/logger.js";
 import { OfflineQueue } from "./offlineQueue.js";
 
+let inactivityTimer;
+const INACTIVITY_TIMEOUT = 5 * 60 * 1000; // 5 minutes (example)
 export const EventService = {
   send(event, data) {
     const payload = {

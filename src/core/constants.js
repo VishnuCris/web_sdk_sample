@@ -1,6 +1,7 @@
 export const STORAGE_KEYS = {
     USER_PROFILE: 'nexora_user_profile',
     OFFLINE_QUEUE: 'nexora_event_queue',
+    SECRET_KEY: 'nexora_secret_key'
   };
   
   export const EVENTS = {

@@ -3,6 +3,7 @@ import { EventService } from "./services/eventService.js";
 import { logger, setLogLevel } from "./core/logger.js";
 import { OfflineQueue } from "./services/offlineQueue.js";
 import { NotificationService } from "./services/notificationService.js";
+import { EVENTS } from "./core/constants.js";
 
 const nexora_sdk = {
   init: (options) => {
@@ -13,9 +14,9 @@ const nexora_sdk = {
     // initiate user
     const { user, isNew } = UserService.initUser();
     logger.log("Nexora SDK initialized", { user });
-    
+    // visit or lauch event
     if(isNew) {
-      EventService.send("Website Launch", {
+      EventService.send(EVENTS.WEB_LAUNCH, {
         url: window.location.href,
         timestamp: new Date().toISOString(),
       });
@@ -40,7 +41,7 @@ const nexora_sdk = {
         // initial page view
         EventService.trackPageView();
       }else{
-        EventService.send("Page Load", {
+        EventService.send(EVENTS.PAGE_LOAD, {
             url: window.location.href,
             timestamp: new Date().toISOString(),
         });
@@ -58,6 +59,9 @@ const nexora_sdk = {
     push: (data) => UserService.onLogin(data),
   },
   profile: {
+    push: (data) => UserService.pushProfile(data),
+  },
+  privacy: {
     push: (data) => UserService.pushProfile(data),
   },
   notifications: {
