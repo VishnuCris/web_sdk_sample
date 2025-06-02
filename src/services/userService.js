@@ -2,7 +2,6 @@ import { STORAGE_KEYS } from "../core/constants.js";
 import { StorageService } from "./storageService.js";
 import { ExternalService } from "./externalService.js";
 import { logger } from "../core/logger.js";
-import { PrivacyService } from "../services/privacyService.js";
 
 export const UserService = {
   initUser(meta_data = null) {
@@ -21,57 +20,28 @@ export const UserService = {
         // ask permission for locations and more
         user["Language"] =  navigator.language
         user["Platform"] =  navigator.platform
-        PrivacyService.showPermissionPrompt((selectedPermissions) => {
-          console.log("User allowed:", selectedPermissions);
-          const permissions = ["Location", "SMS", "WhatsApp", "Push Notifications", "Email"];
-          for(let key of selectedPermissions){
-            console.log(key)
-            switch(key){
-              case "Location":
-                user["Device"] = navigator.userAgent
-                user["UseLocation"] =  true
-                if ("geolocation" in navigator) {
-                  navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                      // find location
-                      if (window.__NEXORA_OFFLINE_MODE) {
-                        logger.log("Event queued (offline mode): location unable to know");
-                      }else{
-                        user["location"] = ExternalService.getLocationName(position.coords.latitude, position.coords.longitude)
-                      }
-                    },
-                    (error) => {
-                      console.error("Error getting location:", error);
-                    },
-                    {
-                      enableHighAccuracy: true,
-                      timeout: 10000,
-                      maximumAge: 0
-                    }
-                  );
-                }
-                break;
-              case 'SMS':
-                user["MSG-sms"] = false;
-                console.log("inside sms")
-                break;
-                case 'Push Notification':
-                  user["MSG-push"] = false;
-                  console.log("inside push")
-                  break;
-                case 'Email':
-                  user["MSG-email"] = false;
-                  console.log("inside email")
-                  break;
-                case 'Whatsapp':
-                  user["MSG-whatsapp"] = false;
-                  console.log("inside whatsapp")
-                  break;
-                default:
-                  break;
+        user["Device"] = navigator.userAgent
+        user["UseLocation"] =  true
+        if ("geolocation" in navigator) {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              // find location
+              if (window.__NEXORA_OFFLINE_MODE) {
+                logger.log("Event queued (offline mode): location unable to know");
+              }else{
+                user["location"] = ExternalService.getLocationName(position.coords.latitude, position.coords.longitude)
+              }
+            },
+            (error) => {
+              console.error("Error getting location:", error);
+            },
+            {
+              enableHighAccuracy: true,
+              timeout: 10000,
+              maximumAge: 0
             }
-          }
-        });
+          );
+        }
       }
       console.log(user)
       StorageService.set(STORAGE_KEYS.USER_PROFILE, user);
@@ -97,10 +67,6 @@ export const UserService = {
       'Location': user.location, 
       'Platform': user.platform,
       'Language': user.language,
-      'MSG-sms': user.MSG-sms,
-      'MSG-push': user.MSG-push,
-      'MSG-email': user.MSG-email,
-      'MSG-whatsapp': user.MSG-whatsapp,
     });
   },
   getUser() {
