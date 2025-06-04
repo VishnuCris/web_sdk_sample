@@ -1,16 +1,20 @@
 
 export const ExternalService = {
     async getLocationName(lat, lon) {
-        const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`;
-        
-        const response = await fetch(url, {
-            headers: {
-            'User-Agent': 'YourAppName/1.0'
-            }
-        });
-        
-        const data = await response.json();
-        return data.display_name;
+      try{
+          const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`;
+          
+          const response = await fetch(url, {
+              headers: {
+              'User-Agent': `${window.__APP_NAME}/1.0`
+              }
+          });
+          
+          const data = await response.json();
+          return data.display_name;
+      }catch(error){
+        return 'Unknown'
+      }
     },
     generateUUID() {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {

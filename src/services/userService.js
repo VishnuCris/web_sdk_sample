@@ -18,10 +18,10 @@ export const UserService = {
         }
       }else{
         // ask permission for locations and more
-        user["Language"] =  navigator.language
-        user["Platform"] =  navigator.platform
-        user["Device"] = navigator.userAgent
-        user["UseLocation"] =  true
+        user["language"] =  navigator.language
+        user["platform"] =  navigator.platform
+        user["device"] = navigator.userAgent
+        user["use_location"] =  true
         if ("geolocation" in navigator) {
           navigator.geolocation.getCurrentPosition(
             (position) => {
@@ -43,7 +43,6 @@ export const UserService = {
           );
         }
       }
-      console.log(user)
       StorageService.set(STORAGE_KEYS.USER_PROFILE, user);
     }
     return {user, isNew};
@@ -63,10 +62,10 @@ export const UserService = {
     let user = StorageService.get(STORAGE_KEYS.USER_PROFILE);
     StorageService.remove(STORAGE_KEYS.USER_PROFILE);
     return this.initUser({
-      'Device': user.device, 
-      'Location': user.location, 
-      'Platform': user.platform,
-      'Language': user.language,
+      'device': user.device, 
+      'location': user.location, 
+      'platform': user.platform,
+      'language': user.language,
     });
   },
   getUser() {

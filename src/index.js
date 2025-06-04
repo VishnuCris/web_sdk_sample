@@ -9,6 +9,7 @@ const nexora_sdk = {
   init: (options) => {
     window.__NEXORA_SECRET_KEY = options.secretKey;
     window.__NEXORA_OFFLINE_MODE = false;
+    window.__APP_NAME = options.app_name;
     // set log level
     setLogLevel(options.logLevel || "warn");
     // initiate user
@@ -18,7 +19,6 @@ const nexora_sdk = {
     if(isNew) {
       EventService.send(EVENTS.WEB_LAUNCH, {
         url: window.location.href,
-        timestamp: new Date().toISOString(),
       });
     }else {
       if(options.is_spa){
@@ -43,7 +43,6 @@ const nexora_sdk = {
       }else{
         EventService.send(EVENTS.PAGE_LOAD, {
             url: window.location.href,
-            timestamp: new Date().toISOString(),
         });
       }
     }

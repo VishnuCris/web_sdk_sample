@@ -11,8 +11,8 @@ export const ApiService = {
       user: userProfile,
       token: window.__NEXORA_SECRET_KEY,
     };
-    console.log(userProfile);
-    console.log(data);
+    console.log(payload);
+    // sets session id from api in user profile in local storage
     // fetch(`${config.apiBaseUrl}${path}`, {
     //   method: "POST",
     //   headers: {
